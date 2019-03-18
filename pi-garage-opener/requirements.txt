@@ -1,4 +1,0 @@
-RPi.GPIO
-boto3
-pika
-simplejson
