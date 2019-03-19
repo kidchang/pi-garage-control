@@ -12,8 +12,9 @@ app = Flask(__name__)
 
 @app.route('/register', methods=['POST'])
 def trigger_listen():
-    queue_id = json.loads(request.data)['queueId']
-    return trigger_listener(queue_id)
+    queue_id = json.loads(request.data)['requestBody']['queueId']
+    # return trigger_listener(queue_id)
+    return utils.make_json_response(200, queue_id)
 
 def trigger_listener(queue_id):
     subprocess.Popen(
@@ -26,4 +27,4 @@ def trigger_listener(queue_id):
     )
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3333)
+    app.run(host='0.0.0.0', port=8081)
