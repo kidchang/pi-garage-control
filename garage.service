@@ -1,0 +1,12 @@
+[Unit]
+Description=Garage Door Service
+After=multi-user.target
+Conflicts=getty@tty1.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /usr/local/bin/garage_listener.py
+StandardInput=tty-force
+
+[Install]
+WantedBy=multi-user.target

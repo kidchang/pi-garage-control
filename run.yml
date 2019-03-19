@@ -1,0 +1,36 @@
+---
+
+- name: Run playbook
+  gather_facts: false
+  hosts: all
+  tasks:
+      - name: Render Jinja2 template
+        template:
+            src: garage_listener.py.j2
+            dest: /usr/local/bin/garage_listener.py
+            owner: root
+            group: staff
+            mode: 0755
+
+      - name: Copy service file
+        copy:
+            src: garage.service
+            dest: /lib/systemd/system/garage.service
+            owner: root
+            group: root
+            mode: 0644
+
+      - name: Reload systemd
+        systemd:
+            daemon_relaod: yes
+
+      - name: Enable garage service
+        systemd:
+            name: garage
+            enabled: yes
+            masked: no
+
+      - name: Start garage service
+        systemd:
+            state: started
+            name: garage
